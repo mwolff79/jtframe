@@ -9,10 +9,11 @@ sim
 history
 a.out
 *.sim
-src/jtframe
-src/mra/pocket.go
+src/jtframe/mra/pocket.go
 .DS_Store
 bin2m
 lut2hex
 msg2hex
 reverse_bits
+bin/jtutil
+src/jtframe/jtframe

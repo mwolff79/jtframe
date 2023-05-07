@@ -7,15 +7,16 @@ if [ -z "$JTFRAME" ]; then
 fi
 
 RECOMPILE=FALSE
+BIN=$JTFRAME/src/jtframe/jtframe
 
-if [ ! -e $JTFRAME/src/jtframe ]; then
+if [ ! -e $BIN ]; then
     RECOMPILE=TRUE
 else
     # Find out whether the jtframe file is older
     # than the JTFRAME's commit
     cd $JTFRAME > /dev/null
     COMMIT_DATE=`date -d "$(git show -s --format=%ci)" +"%s"`
-    COMPILED_DATE=`stat -c %Y $JTFRAME/src/jtframe`
+    COMPILED_DATE=`stat -c %Y $BIN`
     if [ $COMPILED_DATE -lt $COMMIT_DATE ]; then
         RECOMPILE=TRUE
     fi
@@ -24,7 +25,7 @@ fi
 
 if [ $RECOMPILE = TRUE ]; then
     if [ -e $JTFRAME/target/pocket/pocket.go ]; then
-        ln -sf $JTFRAME/target/pocket/pocket.go $JTFRAME/src/mra/pocket.go
+        ln -sf $JTFRAME/target/pocket/pocket.go $JTFRAME/src/jtframe/mra/pocket.go
         POCKET="-tags pocket"
         echo "Compiling jtframe with Pocket support" > /dev/stderr
     fi
@@ -33,4 +34,4 @@ if [ $RECOMPILE = TRUE ]; then
     cd - > /dev/null
 fi
 
-$JTFRAME/src/jtframe $*
+$BIN $*
