@@ -72,14 +72,16 @@ reg  [PW-5:0] dr_pal;
 
 generate
     if( LATCH ) begin
-        always @(posedge clk) if( !busy ) begin
-            dr_draw  <= draw;
-            dr_code  <= code;
-            dr_xpos  <= xpos;
-            dr_ysub  <= ysub;
-            dr_hflip <= hflip;
-            dr_vflip <= vflip;
-            dr_pal   <= pal;
+        always @(posedge clk) begin
+            dr_draw <= draw;
+            if( !busy ) begin
+                dr_code  <= code;
+                dr_xpos  <= xpos;
+                dr_ysub  <= ysub;
+                dr_hflip <= hflip;
+                dr_vflip <= vflip;
+                dr_pal   <= pal;
+            end
         end
     end else begin
         always @* begin
