@@ -28,6 +28,7 @@ var log2binCmd = &cobra.Command{
 Use -a0 and -s to specify the beginning of the region and its size
 `,
 	Run: log2bin,
+	Args: cobra.MaximumNArgs(1),
 }
 
 func init() {

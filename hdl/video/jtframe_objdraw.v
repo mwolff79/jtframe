@@ -25,6 +25,7 @@
 module jtframe_objdraw#( parameter
     CW    = 12,    // code width
     PW    =  8,    // pixel width (lower four bits come from ROM)
+    ZW    =  6,    // zoom step width
     SWAPH =  0,    // swaps the two horizontal halves of the tile
     HJUMP =  0,    // set to 0 if hdump is a continuous count
                    // set to 1 if hdump jumps from  FF to 180  (like KIWI)
@@ -46,6 +47,9 @@ module jtframe_objdraw#( parameter
     input    [CW-1:0]   code,
     input      [ 8:0]   xpos,
     input      [ 3:0]   ysub,
+    // optional zoom, keep at zero for no zoom
+    input    [ZW-1:0]   hzoom,
+    input               hz_keep, // set at 1 for the first tile
 
     input               hflip,
     input               vflip,
@@ -70,6 +74,9 @@ reg    [ 3:0] dr_ysub;
 reg           dr_hflip, dr_vflip, dr_draw;
 reg  [PW-5:0] dr_pal;
 
+reg  [ZW-1:0] dr_hzoom;
+reg           dr_hz_keep;
+
 generate
     if( LATCH ) begin
         always @(posedge clk) begin
@@ -81,6 +88,8 @@ generate
                 dr_hflip <= hflip;
                 dr_vflip <= vflip;
                 dr_pal   <= pal;
+                dr_hzoom <= hzoom;
+                dr_hz_keep<= hz_keep;
             end
         end
     end else begin
@@ -92,6 +101,8 @@ generate
             dr_hflip = hflip;
             dr_vflip = vflip;
             dr_pal   = pal;
+            dr_hzoom = hzoom;
+            dr_hz_keep= hz_keep;
         end
     end
 endgenerate
@@ -116,6 +127,7 @@ end
 jtframe_draw #(
     .CW   ( CW    ),
     .PW   ( PW    ),
+    .ZW   ( ZW    ),
     .SWAPH( SWAPH )
 )u_draw(
     .rst        ( rst       ),
@@ -125,6 +137,8 @@ jtframe_draw #(
     .code       ( dr_code   ),
     .xpos       ( dr_xpos   ),
     .ysub       ( dr_ysub   ),
+    .hz_keep    ( dr_hz_keep),
+    .hzoom      ( dr_hzoom  ),
     .hflip      ( dr_hflip  ),
     .vflip      ( dr_vflip  ),
     .pal        ( dr_pal    ),
