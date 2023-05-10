@@ -14,8 +14,8 @@ apt upgrade --yes
 
 apt install --yes --install-suggests apt-transport-https nfs-common
 apt install --yes --install-suggests build-essential git gtkwave figlet xmlstarlet \
-    sublime-text docker 
- 
+    sublime-text docker
+
 # required by iverilog
 apt install --yes flex gperf bison
 
@@ -25,7 +25,7 @@ apt install --yes libqwt-qt5-dev libsdl2-dev libfontconfig1-dev libsdl2-ttf-dev 
     qtchooser qt5-qmake
 
 # jtcore and jtupdate
-apt install --yes parallel locate
+apt install --yes parallel locate python3-pip
 updatedb
 
 # open picoblaze assembler needed for assembling the cheat and beta code
