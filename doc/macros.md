@@ -81,7 +81,7 @@ JTFRAME_OSD_NOLOGO       |         | Disables the JT logo as OSD background
 JTFRAME_OSD_SND_EN       |         | OSD option to enable/disable FX and FM channels
 JTFRAME_OSD_TEST         |         | Test option on OSD
 JTFRAME_OSD_VOL          |         | Show FX volume control on OSD
-JTFRAME_OSDCOLOR         |         | Sets the OSD colour
+JTFRAME_OSDCOLOR         |         | Sets the OSD colour. Use 0x30 for red.
 JTFRAME_PADDLE           |         | Enables paddle inputs to the game module
 JTFRAME_PADDLE_MAX       |         | Maximum paddle value used by jtframe_paddle (mouse-to-paddle emulation)
 JTFRAME_PLL              |         | PLL module name to be used. PLL names must end in the pixel clock frequency in kHz
