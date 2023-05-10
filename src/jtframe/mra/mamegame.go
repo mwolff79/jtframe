@@ -111,7 +111,7 @@ type MameXML struct {
 // Configure whether to parse or not a machine
 type ParseCfg struct {
 	All        bool // parse all games
-	Sourcefile string
+	Sourcefile []string
 	Main_setnames []string // setname to be used as the main ones to copy in mister/releases
 	Rename     []struct {
 		Setname string
@@ -195,8 +195,10 @@ loop_machines:
 					if len(cfg.Sourcefile) != 0 {
 						for _, v := range se.Attr {
 							if v.Name.Local == "sourcefile" {
-								if filepath.Base(v.Value) == cfg.Sourcefile {
-									dump = true
+								for _, each := range cfg.Sourcefile {
+									if filepath.Base(v.Value) == each {
+										dump = true
+									}
 								}
 							}
 						}

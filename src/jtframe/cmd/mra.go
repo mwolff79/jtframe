@@ -45,7 +45,7 @@ depending on the --git argument.
 TOML elements (see full reference in mame2mra.go)
 
 [parse]
-sourcefile="mamefile.cpp"
+sourcefile=[ "mamefile1.cpp", "mamefile2.cpp"... ]
 skip.Setnames=["willskip1","willskip2"]
 skip.Bootlegs=true # to skip bootlegs
 mustbe.devices=[ "i8751"... ]

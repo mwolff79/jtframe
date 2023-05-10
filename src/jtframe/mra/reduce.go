@@ -42,7 +42,7 @@ func collect_sources(verbose bool) []string {
 					fmt.Println("Parsing ", args)
 				}
 				cfg := parse_toml(&args)
-				sources = append(sources, cfg.Parse.Sourcefile)
+				sources = append(sources, cfg.Parse.Sourcefile...)
 			}
 		}
 	}
