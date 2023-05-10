@@ -64,7 +64,7 @@ files=[
 ]
 
 [dipsw]
-rename=[ {name="Bonus Life", to="Bonus" }, ... ]
+rename=[ {name="Bonus Life", to="Bonus", values=[ "value1", "value2"...] }, ... ]
 delete=[ "name"... ]
 # Add more options
 extra=[
