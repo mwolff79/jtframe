@@ -137,17 +137,29 @@ func make_ROM(root *XMLNode, machine *MachineXML, cfg Mame2MRA, args Args) {
 	previous.add_length(pos)
 	make_devROM(p, machine, cfg, &pos)
 	p.AddNode(fmt.Sprintf("Total 0x%X bytes - %d kBytes", pos, pos>>10)).comment = true
-	make_patches(p, machine, cfg)
+	make_patches(p, machine, cfg, args.macros )
 	if header != nil {
 		make_header(header, reg_offsets, pos, cfg.Header, machine)
 	}
 }
 
-func make_patches(root *XMLNode, machine *MachineXML, cfg Mame2MRA) {
+func make_patches(root *XMLNode, machine *MachineXML, cfg Mame2MRA, macros map[string]string ) {
+	header := 0
+	if hd_str, f := macros["JTFRAME_HEADER"]; f {
+		h, e := strconv.ParseInt( hd_str, 0, 64 )
+		if e!=nil {
+			fmt.Printf("Cannot parse JTFRAME_HEADER=%s\n", hd_str )
+		}
+		header = int(h)
+	}
+	if header != 0 {
+		root.AddNode(fmt.Sprintf("Adding %d bytes to the patch offset to make up for the MRA header",
+			header)).comment=true
+	}
 	for _, each := range cfg.ROM.Patches {
 		if each.Match(machine) > 0 {
 			// apply the patch
-			root.AddNode("patch", each.Value).AddAttr("offset", fmt.Sprintf("0x%X", each.Offset))
+			root.AddNode("patch", each.Value).AddAttr("offset", fmt.Sprintf("0x%X", each.Offset+header))
 		}
 	}
 }

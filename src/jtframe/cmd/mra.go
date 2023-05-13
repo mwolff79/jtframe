@@ -124,6 +124,11 @@ splits=[
 	# attribute can be set. See kchamp for an example
 	{ machine="...", offset=0x10000, min_len=0x2000 },
 ]
+# Patch the final ROM file, the offset will be automatically adjusted
+# to add JTFRAME_HEADER
+patches = [
+	{ machine="...", setname="...", offset=0x0000, value="01 02 03..." },...
+]
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		if reduce {
