@@ -162,17 +162,13 @@ initial begin
     end
 end
 
-// The PROM starts downloading at the same time that
-// the test_harness sends the first 32 bytes of ROM
-// the data from the harness is ignored here, but
-// the header output is set to 1 if HEADER is defined,
-// so these data can be read externally if checked for ioctrl_wr/ioctrl_data
+// The PROM starts downloading after the header section is over
 reg start_ok=0;
 initial prog_we=0;
 
 always @(posedge clk) begin
     if( downloading ) start_ok<=1;
-    if( dumpcnt < GAME_ROM_LEN && start_ok ) begin
+    if( dumpcnt < GAME_ROM_LEN && start_ok && !header) begin
         prom_we   <= 1;
         prog_we   <= 0;
         prog_mask <= 2'b11;
